@@ -1,0 +1,21 @@
+{
+  "name": "lambda-fme-cloud",
+  "version": "0.0.0",
+  "description": "FME Cloud API functions in a lambda function (for step functions).",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tesera/lambda-fme-cloud.git"
+  },
+  "author": "Matt Zandstra <matt.zandstra@tesera.com> (http://tesera.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tesera/lambda-fme-cloud/issues"
+  },
+  "dependencies": {
+    "fme-cloud-api": "0.0.3"
+  }
+}

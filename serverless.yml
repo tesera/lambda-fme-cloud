@@ -1,0 +1,20 @@
+
+service: lambda-fme-cloud
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+  environment: ${file(env.yml)}
+
+functions:
+  start:
+    handler: handler.start
+    name: lambda-fme-cloud-start
+  pause:
+    handler: handler.pause
+    name: lambda-fme-cloud-pause
+  list:
+    handler: handler.list
+    name: lambda-fme-cloud-list
