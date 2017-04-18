@@ -18,4 +18,6 @@ Be sure you have serverless installed globally.
 
 ## Deployment
 
+    cp sample.env.yml env.yml
+    # Update your FME Cloud API Token in env.yml
     serverless deploy
