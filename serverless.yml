@@ -15,6 +15,9 @@ functions:
   pause:
     handler: handler.pause
     name: lambda-fme-cloud-pause
-  list:
-    handler: handler.list
-    name: lambda-fme-cloud-list
+  submitJob:
+    handler: handler.submitJob
+    name: lambda-fme-server-submit-job
+  checkJobComplete:
+    handler: handler.checkJobComplete
+    name: lambda-fme-server-submit-job

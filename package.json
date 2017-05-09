@@ -16,6 +16,7 @@
     "url": "https://github.com/tesera/lambda-fme-cloud/issues"
   },
   "dependencies": {
-    "fme-cloud-api": "0.0.3"
+    "fme-cloud-api": "^0.0.5",
+    "fme-server-api": "^0.0.4"
   }
 }
