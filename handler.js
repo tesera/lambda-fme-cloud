@@ -55,9 +55,9 @@ module.exports.submitJob = (event, context, callback) => {
 module.exports.checkJobComplete = (event, context, callback) => {
     var client = new FMEServerAPI(process.env.SERVER, process.env.SERVER_TOKEN);
 
-    client.getJob(event.jobID).then((res) => {
+    client.getJob(event.id).then((res) => {
         res = JSON.parse(res);
-        console.log(`Job ${event.jobID} is ${res.status}`);
+        console.log(`Job ${event.id} is ${res.status}`);
         callback(null, res.status);
     })
     .catch((err) => {
