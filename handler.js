@@ -60,5 +60,7 @@ module.exports.checkJobComplete = (event, context, callback) => {
         console.log(`Job ${event.jobID} is ${res.status}`);
         callback(null, res.status);
     })
-    .catch(callback);
+    .catch((err) => {
+        callback(JSON.stringify(err));
+    });
 }
