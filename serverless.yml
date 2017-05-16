@@ -20,4 +20,4 @@ functions:
     name: lambda-fme-server-submit-job
   checkJobComplete:
     handler: handler.checkJobComplete
-    name: lambda-fme-server-submit-job
+    name: lambda-fme-server-check-job-complete
