@@ -9,10 +9,10 @@ module.exports.start = (event, context, callback) => {
         client.start(event.FMEInstanceID);
         callback(null, event);
     } else {
-        callback({
+        callback(JSON.stringify({
             message: 'Missing FMEInstanceID',
             event
-        });
+        }));
     }
 };
 
