@@ -4,6 +4,8 @@ const FMECloudAPI = require('fme-cloud-api');
 const FMEServerAPI = require('fme-server-api');
 
 module.exports.start = (event, context, callback) => {
+    console.log(event);
+
     if(event.FMEInstanceID) {
         var client = new FMECloudAPI(process.env.TOKEN);
         client.start(event.FMEInstanceID);
@@ -17,21 +19,25 @@ module.exports.start = (event, context, callback) => {
 };
 
 module.exports.pause = (event, context, callback) => {
+    console.log(event);
+
     if(event.FMEInstanceID) {
         var client = new FMECloudAPI(process.env.TOKEN);
         client.pause(event.FMEInstanceID).then(() => {
             callback(null, event);
         }).catch(console.error);
     } else {
-        callback({
+        callback(JSON.stringify({
             message: 'Missing FMEInstanceID',
             event
-        });
+        }));
     }
     
 };
 
 module.exports.list = (event, context, callback) => {
+    console.log(event);
+
     var client = new FMECloudAPI(process.env.TOKEN);
     client.instances().then((instances) => {
         callback(null, {
@@ -43,21 +49,27 @@ module.exports.list = (event, context, callback) => {
 };
 
 module.exports.submitJob = (event, context, callback) => {
+    console.log(event);
+
     var client = new FMEServerAPI(process.env.SERVER, process.env.SERVER_TOKEN);
 
     client.submitJob(event.job.repository, event.job.workspace, event.job.parameters).then((res) => {
-        event.jobOutput = res
+        event.jobOutput = JSON.parse(res)
         callback(null, event);
     })
     .catch(callback);
 }
 
 module.exports.checkJobComplete = (event, context, callback) => {
-    var client = new FMEServerAPI(process.env.SERVER, process.env.SERVER_TOKEN);
+    console.log(event);
+    if(!event.desiredStatus) event.desiredStatus = "SUCCESS"
 
+    var client = new FMEServerAPI(process.env.SERVER, process.env.SERVER_TOKEN);
     client.getJob(event.id).then((res) => {
         res = JSON.parse(res);
         console.log(`Job ${event.id} is ${res.status}`);
+        if(res.status != event.desiredStatus)
+            return Promise.reject(`Desired state has not been reached. ${res.status}!=${event.desiredStatus}`)
         callback(null, res.status);
     })
     .catch((err) => {
