@@ -11,13 +11,16 @@ provider:
 functions:
   start:
     handler: handler.start
-    name: lambda-fme-cloud-start
+    name: fme-cloud-start
   pause:
     handler: handler.pause
-    name: lambda-fme-cloud-pause
+    name: fme-cloud-pause
   submitJob:
     handler: handler.submitJob
-    name: lambda-fme-server-submit-job
+    name: fme-server-submit-job
   checkJobComplete:
     handler: handler.checkJobComplete
-    name: lambda-fme-server-check-job-complete
+    name: fme-server-check-job-complete
+  checkInstanceState:
+    handler: handler.checkInstanceState
+    name: fme-server-check-state

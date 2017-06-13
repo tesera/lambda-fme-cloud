@@ -94,3 +94,29 @@ module.exports.checkJobComplete = (event, context, callback) => {
         callback(JSON.stringify(err));
     });
 }
+
+module.exports.checkInstanceState = (event, context, callback) => {
+    console.log(event);
+    var desiredState = event.desiredState || 'RUNNING';
+    var failOnMismatch = event.failOnMismatch || true;
+
+    if(event.FMEInstanceID) {
+        var client = new FMECloudAPI(process.env.TOKEN);
+        client
+            .instance(event.FMEInstanceID)
+            .then((instance) => {
+                instance = JSON.parse(instance);
+                if(instance.state == desiredState) callback(null, instance.state);
+                else {
+                    console.log("fail on mismatch:", failOnMismatch);
+                    failOnMismatch && callback(instance.state) || callback(null, instance.state);
+                }
+            })
+            .catch(console.error);
+    } else {
+        callback(JSON.stringify({
+            message: 'Missing FMEInstanceID',
+            event
+        }));
+    }
+}
