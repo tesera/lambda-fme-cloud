@@ -53,7 +53,25 @@ module.exports.submitJob = (event, context, callback) => {
 
     var client = new FMEServerAPI(process.env.SERVER, process.env.SERVER_TOKEN);
 
-    client.submitJob(event.job.repository, event.job.workspace, event.job.parameters).then((res) => {
+    // Translate parameters if required
+    var parameters;
+    if(typeof event.job.parameters == "object")
+    {
+        parameters = Object.keys(event.job.parameters).map((name) => {
+            return {
+                "name": name,
+                "value": event.job.parameters[name]
+            }
+        });
+        parameters = { "publishedParameters": parameters }
+    } else {
+        parameters = event.job.parameters;
+    }
+
+    console.log("Parameters sent to API:", parameters);
+
+    client.submitJob(event.job.repository, event.job.workspace, parameters).then((res) => {
+        console.log(res);
         event.jobOutput = JSON.parse(res)
         callback(null, event);
     })
